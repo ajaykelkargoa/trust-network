@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Trust Network</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #333;
+            background: #fafafa;
+        }
+        
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(165deg, #1a3a4a 0%, #2c5f6e 100%);
+            color: white;
+            padding: 50px 30px;
+        }
+        
+        .header .container { padding: 0 30px; max-width: 750px; margin: 0 auto; }
+        
+        .personal-note {
+            border-left: 2px solid rgba(255,255,255,0.4);
+            padding: 20px 25px;
+            margin-bottom: 40px;
+            font-style: italic;
+            opacity: 0.95;
+            line-height: 1.9;
+        }
+        
+        .personal-note .signature {
+            margin-top: 15px;
+            font-style: normal;
+            font-weight: 600;
+        }
+        
+        .header h1 {
+            font-size: 2.4rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        
+        .header .tagline {
+            font-size: 1.1rem;
+            opacity: 0.85;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 50px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .section:last-of-type { border-bottom: none; }
+        
+        .section-title {
+            color: #1a3a4a;
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2c5f6e;
+            display: inline-block;
+        }
+        
+        h3 {
+            color: #2c5f6e;
+            font-size: 1.2rem;
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+        
+        p { margin-bottom: 15px; }
+        
+        strong { color: #1a3a4a; }
+        
+        /* Boxes */
+        .box {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .box.highlight {
+            background: #f0f7f9;
+            border-left: 3px solid #2c5f6e;
+        }
+        
+        .box.warm {
+            background: #fdf8f5;
+            border-left: 3px solid #c17f59;
+        }
+        
+        .box.green {
+            background: #f5faf6;
+            border-left: 3px solid #4a9b8c;
+        }
+        
+        .box h4 {
+            color: #1a3a4a;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin: 20px 0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat .number {
+            font-size: 1.6rem;
+            color: #2c5f6e;
+            font-weight: 400;
+        }
+        
+        .stat .label {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 15px 0 15px 25px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .grid-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+        }
+        
+        .grid-item h5 {
+            color: #1a3a4a;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .grid-item p {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        /* Iceberg */
+        .iceberg {
+            background: linear-gradient(180deg, #e8f4f2 0%, #e8f4f2 35%, #2c5f6e 35%, #1a3a4a 100%);
+            border-radius: 6px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .above-water {
+            padding: 25px;
+            color: #1a3a4a;
+            min-height: 100px;
+        }
+        
+        .below-water {
+            padding: 25px;
+            color: white;
+            min-height: 150px;
+        }
+        
+        .water-label {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .above-water .tag {
+            background: #2c5f6e;
+            color: white;
+        }
+        
+        .below-water .tag {
+            background: rgba(255,255,255,0.15);
+            color: white;
+        }
+        
+        /* Story */
+        .story {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-left: 3px solid #4a9b8c;
+            border-radius: 6px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .story h4 {
+            color: #1a3a4a;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .story .meta {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        /* Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .comparison-col {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+        }
+        
+        .comparison-col.old { border-top: 3px solid #999; }
+        .comparison-col.new { border-top: 3px solid #4a9b8c; }
+        
+        .comparison-col h5 {
+            color: #1a3a4a;
+            margin-bottom: 15px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .comparison-col ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .comparison-col li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+        
+        .comparison-col li:last-child { border-bottom: none; }
+        
+        /* Journey */
+        .journey-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+        
+        .step-num {
+            width: 30px;
+            height: 30px;
+            background: #2c5f6e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: #1a3a4a;
+            font-size: 1rem;
+            margin-bottom: 3px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        /* Blockquote */
+        blockquote {
+            border-left: 2px solid #4a9b8c;
+            padding-left: 20px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* Key point */
+        .key-point {
+            background: #f0f7f9;
+            padding: 15px 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 500;
+            color: #1a3a4a;
+            margin: 20px 0;
+        }
+        
+        /* Attribution */
+        .attribution {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        /* Feedback */
+        .feedback-section {
+            background: #2c5f6e;
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .feedback-section h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .feedback-section p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-btn {
+            display: inline-block;
+            background: white;
+            color: #2c5f6e;
+            padding: 14px 35px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-weight: 500;
+        }
+        
+        .feedback-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a3a4a;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        footer a { color: #4a9b8c; }
+        
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .comparison { grid-template-columns: 1fr; }
+            .stats { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        <div class="container">
+            <div class="personal-note">
+                <p>Most ideas I either build or let go. This one won't let me do either. It keeps showing up in conversations, in things I read, in problems I see. I have created a company out of a concept and also failed at many concepts. Yet this time, something's telling me to pause and ask others first. I'm not sure if I'm being wise or just scared of how big it is.</p>
+                <p class="signature">- Ajay</p>
+            </div>
+            <h1>The Trust Network</h1>
+            <p class="tagline">Surfacing hidden skills. Creating bridge connections. Decentralizing trust.</p>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <!-- SECTION 1: THE PROBLEM -->
+        <div class="section">
+            <h2 class="section-title">1. The Problem</h2>
+            
+            <p>India's demographic dividend could become a demographic disaster. Millions have real skills but no way to prove them, and no connections to open unexpected doors.</p>
+            
+            <div class="box highlight">
+                <h4>India's Demographic Moment</h4>
+                <p>According to the Economic Survey 2025-26, India's working-age population (15-59 years) will exceed 98 crore in the next 10 years. The demographic dividend peaks around 2030, when 65% of the population will be of working age.</p>
+                <div class="stats">
+                    <div class="stat"><div class="number">98 Cr</div><div class="label">Working-age by 2035</div></div>
+                    <div class="stat"><div class="number">65%</div><div class="label">Aged 15-59 by 2030</div></div>
+                    <div class="stat"><div class="number">70M+</div><div class="label">Below poverty line</div></div>
+                    <div class="stat"><div class="number">&lt;27%</div><div class="label">Complete school</div></div>
+                </div>
+            </div>
+            
+            <div class="box warm">
+                <h4>Who Gets Left Behind?</h4>
+                <div class="grid">
+                    <div class="grid-item"><h5>NEET Youth</h5><p>Not in Education, Employment, or Training</p></div>
+                    <div class="grid-item"><h5>Gig Workers</h5><p>Delivery partners, drivers seeking stability</p></div>
+                    <div class="grid-item"><h5>MNREGA Workers</h5><p>Daily wage laborers with skills but no credentials</p></div>
+                    <div class="grid-item"><h5>Domestic Workers</h5><p>Ages 22-35, stuck with no growth path</p></div>
+                </div>
+            </div>
+            
+            <div class="box green">
+                <h4>The Double Barrier</h4>
+                <p><strong>1. Hidden Skills:</strong> They have real skills (dependability, problem-solving) but no credentials to prove them.</p>
+                <p><strong>2. Missing Bridge Connections:</strong> They lack relationships that span different worlds, connections that could open unexpected doors to new industries.</p>
+                <div class="key-point">No credentials + No bridge connections = No upward mobility</div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: THE INSIGHT -->
+        <div class="section">
+            <h2 class="section-title">2. The Unique Insight</h2>
+            
+            <p>Two research-backed insights reveal why talented people stay stuck, and point to a powerful solution.</p>
+            
+            <h3>Insight 1: Below the Iceberg</h3>
+            <p>When you see an iceberg, only about 10% is visible above water. The other 90% is hidden below, invisible but real.</p>
+            <p><strong>Skills work the same way.</strong> Employers see degrees and certificates (10%). But skills that predict workplace success are learned through life: Dependability. Problem-solving. Time management. Communication. Resilience.</p>
+            <p>We call these <strong>"building block skills."</strong> A delivery worker with a 4.8 rating has proven time management. An MNREGA worker with perfect attendance has proven dependability. <strong>Real skills, invisible credentials.</strong></p>
+            
+            <h3>Insight 2: The Power of Bridge Connections</h3>
+            <p>Counterintuitive finding from 50 years of research: <strong>acquaintances open more doors than close friends</strong> when it comes to jobs.</p>
+            <p>Close friends know what you know, an echo chamber. But acquaintances, what researchers call <strong>"consequential strangers"</strong>, move in different circles. They bring unexpected opportunities from worlds you've never accessed.</p>
+            <p>Privileged youth have built-in bridge connections: alumni networks, parents' contacts. <strong>Those at the bottom have strong family ties but lack bridges to orthogonal worlds.</strong></p>
+            
+            <div class="iceberg">
+                <div class="above-water">
+                    <p class="water-label">What Employers See (~10%)</p>
+                    <div class="tags">
+                        <span class="tag">Degrees</span>
+                        <span class="tag">Certificates</span>
+                        <span class="tag">Job Titles</span>
+                    </div>
+                </div>
+                <div class="below-water">
+                    <p class="water-label">Building Block Skills (~90%)</p>
+                    <div class="tags">
+                        <span class="tag">Dependability</span>
+                        <span class="tag">Time Management</span>
+                        <span class="tag">Problem Solving</span>
+                        <span class="tag">Communication</span>
+                        <span class="tag">Resilience</span>
+                        <span class="tag">Accountability</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="box highlight">
+                <h4>Research: Strength of Weak Ties (Granovetter, 1973)</h4>
+                <p>Most people find jobs through acquaintances, not close friends. Confirmed across 55 countries. <strong>Strong ties provide emotional support. Bridge connections open unexpected doors.</strong></p>
+            </div>
+            
+            <div class="box green">
+                <h4>The Solution: One Action, Two Results</h4>
+                <p>What if one action could simultaneously:</p>
+                <p><strong>1. Surface a hidden skill</strong> (bring it above the iceberg)</p>
+                <p><strong>2. Create a new bridge connection</strong> (link to an orthogonal world)</p>
+                <p>That action is a <strong>badge</strong>, given by someone who has witnessed your skill in action.</p>
+                <div class="key-point">Every badge = Skill made visible + New bridge connection to a different world</div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: PLAYLISTS -->
+        <div class="section">
+            <h2 class="section-title">3. The Concept of Playlists</h2>
+            
+            <p>Just like Spotify curates songs into playlists, The Trust Network curates building block skills into career-ready pathways.</p>
+            
+            <h3>Building Block Skills</h3>
+            <p>Skills learned through everyday life, not school, that predict workplace success:</p>
+            
+            <div class="grid">
+                <div class="grid-item"><h5>Dependability</h5><p>Shows up daily, keeps commitments</p></div>
+                <div class="grid-item"><h5>Time Management</h5><p>Meets deadlines, prioritizes tasks</p></div>
+                <div class="grid-item"><h5>Problem Solving</h5><p>Navigates obstacles, finds alternatives</p></div>
+                <div class="grid-item"><h5>Accountability</h5><p>Takes ownership, reports accurately</p></div>
+                <div class="grid-item"><h5>Resilience</h5><p>Works through difficulty, bounces back</p></div>
+                <div class="grid-item"><h5>Communication</h5><p>Listens, explains clearly</p></div>
+            </div>
+            
+            <h3>How Playlists Work</h3>
+            <p>Each career path has a playlist of building block skills. Complete the playlist = prove you're career-ready.</p>
+            <p><strong>The Flow:</strong> Choose career path > See required skills (5-8 building blocks) > Earn badges from mentors > Complete playlist = Career ready</p>
+            
+            <h3>Example Playlists</h3>
+            <div class="grid">
+                <div class="grid-item"><h5>Logistics & Warehousing</h5><p>Time Management, Dependability, Physical Stamina, Problem Solving, Basic Tech</p></div>
+                <div class="grid-item"><h5>Government Office Support</h5><p>Dependability, Following Instructions, Basic Literacy, Accountability</p></div>
+                <div class="grid-item"><h5>Accounting Assistant</h5><p>Accountability, Attention to Detail, Basic Excel, Numeracy</p></div>
+                <div class="grid-item"><h5>Childcare & Education</h5><p>Patience, Dependability, Communication, Positive Attitude</p></div>
+            </div>
+            
+            <div class="box highlight">
+                <h4>What Is a Badge?</h4>
+                <p>A digital credential that says: <strong>"I have personally witnessed this person demonstrate this skill."</strong></p>
+                <p>Unlike institutional certificates, badges come from people who've observed the skill: supervisors, customers, mentors. Each badge is stored on a decentralized ledger: verifiable, tamper-proof, owned by the earner.</p>
+                <div class="key-point">Every badge = credential (skill visible) + bridge connection (link to orthogonal world)</div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: PARTICIPANTS -->
+        <div class="section">
+            <h2 class="section-title">4. Roles of Participants</h2>
+            
+            <p>The Trust Network is a multi-sided platform. Every participant gives and receives value.</p>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <h5>Mentors</h5>
+                    <p><strong>Role:</strong> Skill Validators, Bridge Builders</p>
+                    <p><strong>Give:</strong> Time, projects, badges, introductions</p>
+                    <p><strong>Get:</strong> Purpose, recognition as talent-spotters</p>
+                </div>
+                <div class="grid-item">
+                    <h5>Large Companies</h5>
+                    <p><strong>Role:</strong> Opportunity Providers</p>
+                    <p><strong>Give:</strong> Job opportunities, skill requirements</p>
+                    <p><strong>Get:</strong> Pre-vetted candidates with proven skills</p>
+                </div>
+                <div class="grid-item">
+                    <h5>SMEs & Small Businesses</h5>
+                    <p><strong>Role:</strong> First Badge-Givers</p>
+                    <p><strong>Give:</strong> Real experience, badges for observed skills</p>
+                    <p><strong>Get:</strong> Recognition, motivated workers</p>
+                </div>
+                <div class="grid-item">
+                    <h5>NGOs</h5>
+                    <p><strong>Role:</strong> Community Bridges</p>
+                    <p><strong>Give:</strong> Access to communities, training</p>
+                    <p><strong>Get:</strong> Measurable impact, placement outcomes</p>
+                </div>
+                <div class="grid-item">
+                    <h5>Government</h5>
+                    <p><strong>Role:</strong> Policy Enablers</p>
+                    <p><strong>Give:</strong> Policy support, program integration</p>
+                    <p><strong>Get:</strong> Employability data, skill gap insights</p>
+                </div>
+                <div class="grid-item">
+                    <h5>Workers</h5>
+                    <p><strong>Role:</strong> Badge Earners</p>
+                    <p><strong>Give:</strong> Demonstrated skills, consistent effort</p>
+                    <p><strong>Get:</strong> Credentials, connections, opportunities</p>
+                </div>
+            </div>
+            
+            <div class="story">
+                <h4>The Mentor Model: Harish & Akshay</h4>
+                <p class="meta">How mentoring actually works</p>
+                <p>Harish (45, PSU Finance Manager) mentors Akshay (22, his maid's son who dropped out after Class 12).</p>
+                <p><strong>The project:</strong> Every day, Harish sends Akshay stock prices of 5 companies via WhatsApp. Akshay records them in Excel by 10 AM.</p>
+                <p><strong>What's assessed:</strong> Not finance knowledge. Accountability. Does he do it daily without reminders? Does he catch errors?</p>
+                <p><strong>Building the playlist:</strong> After 3 weeks, add complexity: percentage changes, weekly averages. Each milestone = new badge.</p>
+                <p><strong>The introduction:</strong> Harish tells a friend at an accounting firm: "I have a young man who's tracked stocks daily for 2 months. Never missed a day."</p>
+                <p><strong>Result:</strong> Akshay gets a temp job. Harish's badge was his credential. Harish's introduction was his bridge connection to an orthogonal world.</p>
+            </div>
+            
+            <div class="key-point">Worker demonstrates skill > Mentor observes > Badge issued > Mentor makes introduction > Unexpected door opens</div>
+        </div>
+
+        <!-- SECTION 5: WHY NOW -->
+        <div class="section">
+            <h2 class="section-title">5. Why Now? Blockchain Enables Decentralized Trust</h2>
+            
+            <p>The concept of skill validation isn't new. What's new is the technology to decentralize it, making this viable for the first time.</p>
+            
+            <div class="comparison">
+                <div class="comparison-col old">
+                    <h5>Old Model: Centralized Trust</h5>
+                    <ul>
+                        <li>Only institutions issue credentials</li>
+                        <li>Expensive and time-consuming</li>
+                        <li>Can't verify informal learning</li>
+                        <li>Credentials can be faked</li>
+                        <li>Institution owns the record</li>
+                        <li>No relationship created</li>
+                    </ul>
+                </div>
+                <div class="comparison-col new">
+                    <h5>New Model: Decentralized Trust</h5>
+                    <ul>
+                        <li>Anyone who witnesses can badge</li>
+                        <li>Free, earned through actions</li>
+                        <li>Life experience counts</li>
+                        <li>Tamper-proof blockchain</li>
+                        <li>Individual owns credentials</li>
+                        <li>Every badge = new connection</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="box highlight">
+                <h4>Why Blockchain?</h4>
+                <p>Decentralized Reputation Systems use distributed ledger technology so that <strong>no single entity controls</strong> reputation information:</p>
+                <ul>
+                    <li><strong>Democratic Issuance:</strong> Anyone who witnesses a skill can issue a badge</li>
+                    <li><strong>Instant Verification:</strong> Employers verify badges are real</li>
+                    <li><strong>Tamper-Proof:</strong> Badges can't be faked or unfairly revoked</li>
+                    <li><strong>User-Owned:</strong> Workers own their credentials, portable forever</li>
+                </ul>
+            </div>
+            
+            <div class="box green">
+                <h4>How Trust Builds Over Time</h4>
+                <ol>
+                    <li><strong>Mentor reputation:</strong> Mentors who badge people who succeed build credibility</li>
+                    <li><strong>Badge patterns:</strong> Multiple independent badges are more credible than one</li>
+                    <li><strong>Outcome tracking:</strong> Success reflects back on badge-givers</li>
+                    <li><strong>Community curation:</strong> The network validates trust, no single entity controls it</li>
+                </ol>
+            </div>
+            
+            <blockquote>"In a networked world, trust is the most important currency." - Eric Schmidt</blockquote>
+        </div>
+
+        <!-- SECTION 6: THE JOURNEY -->
+        <div class="section">
+            <h2 class="section-title">6. The Full Journey</h2>
+            
+            <p>How does it all come together? Here's the step-by-step journey.</p>
+            
+            <div class="journey-step"><div class="step-num">1</div><div class="step-content"><h4>Join & Map Network</h4><p>Create profile. Identify everyone who's seen you work.</p></div></div>
+            <div class="journey-step"><div class="step-num">2</div><div class="step-content"><h4>Assess Strengths</h4><p>Discover building block skills you've developed.</p></div></div>
+            <div class="journey-step"><div class="step-num">3</div><div class="step-content"><h4>Choose Playlist</h4><p>Select target career. See which skills to develop or prove.</p></div></div>
+            <div class="journey-step"><div class="step-num">4</div><div class="step-content"><h4>Invite Badge-Givers</h4><p>Ask people who've seen your work to badge your skills.</p></div></div>
+            <div class="journey-step"><div class="step-num">5</div><div class="step-content"><h4>Connect with Mentor</h4><p>Work on projects that demonstrate and develop missing skills.</p></div></div>
+            <div class="journey-step"><div class="step-num">6</div><div class="step-content"><h4>Complete Playlist</h4><p>Earn all badges. Verified proof of skills.</p></div></div>
+            <div class="journey-step"><div class="step-num">7</div><div class="step-content"><h4>Unexpected Doors Open</h4><p>With credentials and connections, opportunities appear from orthogonal worlds.</p></div></div>
+            
+            <h3>Real Stories</h3>
+            
+            <div class="story">
+                <h4>Vikram: Delivery to Logistics</h4>
+                <p class="meta">Age 29, "Reluctant", Rs 15,000 > Rs 22,000 + benefits</p>
+                <p>Vikram has a 4.8 Swiggy rating. Gets badged by customers for Time Management. Selects "Logistics" playlist. A retired logistics manager mentors him, then introduces him to D-Mart's warehouse manager.</p>
+                <p><strong>Result:</strong> Rs 22,000/month with PF. Moved from "Reluctant" to stable employment.</p>
+            </div>
+            
+            <div class="story">
+                <h4>Sunita: MNREGA to Government</h4>
+                <p class="meta">Age 32, Rural Rajasthan, "Financially Strapped" > Stable role</p>
+                <p>Sunita has 100% MNREGA attendance for 3 years. An NGO helps her join. Supervisor badges her for Dependability. A retired teacher mentors literacy. The NGO coordinator introduces her to the Block Development Officer.</p>
+                <p><strong>Result:</strong> Government data entry role. Regular hours, stability.</p>
+            </div>
+            
+            <div class="story">
+                <h4>Rima: Domestic Worker to School Admissions</h4>
+                <p class="meta">Age 26, Class 10 dropout, Rs 8,000 > Rs 18,000</p>
+                <p>Rima is a nanny, dependable, quick learner. Employers badge her for Reliability. Selects "Childcare" playlist. A daycare mentor completes her training, then bridges her to a play school.</p>
+                <p><strong>Result:</strong> Admissions job at Rs 18,000/month with growth potential.</p>
+            </div>
+            
+            <div class="box green">
+                <h4>The Goal: Upward Mobility at Scale</h4>
+                <ul>
+                    <li>Gig workers > Formal employment with benefits</li>
+                    <li>MNREGA laborers > Government or private sector</li>
+                    <li>Domestic workers > Education, healthcare, retail</li>
+                    <li>NEET youth > Entry-level with upward paths</li>
+                </ul>
+                <div class="key-point">Building block skills get you noticed. Bridge connections open unexpected doors. Blockchain makes it trustworthy. Together: upward mobility for millions.</div>
+            </div>
+            
+            <div class="attribution">
+                <strong>Attribution:</strong> This concept was developed in partnership with Priya Agarwal, Founder of Antarang Foundation, an NGO that has enabled many marginalised young adults to get onto pathways to careers that enable social and economic mobility.
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="feedback-section">
+        <h3>Share Your Feedback</h3>
+        <p>Your perspective will shape what comes next. I read every response.</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdkkOTepj_qsa8wC3ygHSbXduhSI2XDQjiBxtGlFoOjPnwZhw/viewform?usp=publish-editor" target="_blank" class="feedback-btn">Open Feedback Form</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p><strong>The Trust Network</strong></p>
+        <p>Surfacing hidden skills. Creating bridge connections. Decentralizing trust.</p>
+        <p>Developed in partnership with Priya Agarwal, Founder of Antarang Foundation</p>
+    </footer>
+
+</body>
+</html>
